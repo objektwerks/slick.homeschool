@@ -1,6 +1,6 @@
-Slick Homeschool
-----------------
->Slick feature test built on homeschool domain model.
+Slick
+-----
+>Momeschool domain model using Slick.
 
 Object Model
 ------------

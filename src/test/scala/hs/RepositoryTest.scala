@@ -3,11 +3,16 @@ package hs
 import java.time.LocalDateTime
 
 import com.typesafe.config.ConfigFactory
-import org.scalatest.{BeforeAndAfterAll, FunSuite, Matchers}
+
+import org.scalatest.funsuite.AnyFunSuite
+import org.scalatest.BeforeAndAfterAll
+import org.scalatest.matchers.should.Matchers
+
+
 import slick.basic.DatabaseConfig
 import slick.jdbc.{H2Profile, JdbcProfile}
 
-class RepositoryTest extends FunSuite with BeforeAndAfterAll with Matchers {
+class RepositoryTest extends AnyFunSuite with BeforeAndAfterAll with Matchers {
   val config = DatabaseConfig.forConfig[JdbcProfile]("test", ConfigFactory.load("test.conf"))
   val repository = new Repository(config, H2Profile)
   import repository._

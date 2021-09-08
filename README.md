@@ -1,6 +1,6 @@
 Slick
 -----
->Momeschool domain model using Slick.
+>Homeschool domain model using Slick.
 
 Object Model
 ------------

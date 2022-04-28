@@ -9,12 +9,6 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-/**
-  * Teacher
-  * Student 1 ---> * Grade
-  * School 1 ---> * Course 1 ---> 1 Category
-  * Assignement 1 ---> 1 Student | Grade | Course
-  */
 class Repository(val config: DatabaseConfig[JdbcProfile], val profile: JdbcProfile, val awaitDuration: Duration = 1 second) {
   import profile.api._
 

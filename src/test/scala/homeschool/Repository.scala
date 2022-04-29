@@ -1,4 +1,4 @@
-package hs
+package homeschool
 
 import java.sql.Timestamp
 import java.time.LocalDateTime

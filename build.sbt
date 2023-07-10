@@ -3,7 +3,7 @@ organization := "objektwerks"
 version := "0.1-SNAPSHOT"
 scalaVersion := "2.13.11"
 libraryDependencies ++= {
-  val slickVersion = "3.5.0-M3" // Still waiting to upgrade to Scala 3!
+  val slickVersion = "3.5.0-M4" // Still waiting to upgrade to Scala 3!
   Seq(
     "com.typesafe.slick" %% "slick" % slickVersion,
     "com.typesafe.slick" %% "slick-hikaricp" % slickVersion,

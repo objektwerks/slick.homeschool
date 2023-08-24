@@ -1,6 +1,6 @@
 Slick Homeschool
 ----------------
->Homeschool domain model using Slick and H2.
+>Homeschool domain model using Slick, H2 and Scala 3.
 
 Scala 3 Bug
 -----------

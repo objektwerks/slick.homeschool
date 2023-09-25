@@ -12,23 +12,21 @@ import org.scalatest.matchers.should.Matchers
 import slick.basic.DatabaseConfig
 import slick.jdbc.{H2Profile, JdbcProfile}
 
-class RepositoryTest extends AnyFunSuite with BeforeAndAfterAll with Matchers {
+final class RepositoryTest extends AnyFunSuite with BeforeAndAfterAll with Matchers:
   val config = DatabaseConfig.forConfig[JdbcProfile]("test", ConfigFactory.load("test.conf"))
   val repository = new Repository(config, H2Profile)
   import repository._
 
-  override protected def beforeAll(): Unit = {
+  override protected def beforeAll(): Unit =
     schema.createStatements foreach println
     schema.dropStatements foreach println
     createSchema()
-  }
 
-  override protected def afterAll(): Unit = {
+  override protected def afterAll(): Unit =
     dropSchema()
     closeRepository()
-  }
 
-  test("repository") {
+  test("repository"):
     await(teachers.save(Teacher(name = "dudley", email = "dudley@em.com"))).get shouldBe 1
 
     val barneyStudentId = await(students.save(Student(name = "barney", email = "barney@em.com", born = LocalDateTime.now.minusYears(7)))).get
@@ -72,5 +70,3 @@ class RepositoryTest extends AnyFunSuite with BeforeAndAfterAll with Matchers {
 
     await(assignments.calculateScore(barneyStudentId, barneyGradeId, basicMathCourseId)).get shouldBe 100.0
     await(assignments.calculateScore(fredStudentId, fredGradeId, basicScienceCourseId)).get shouldBe 60.0
-  }
-}

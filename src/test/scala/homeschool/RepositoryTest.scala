@@ -17,4 +17,4 @@ final class RepositoryTest extends AnyFunSuite with Matchers:
     val repository = new Repository(config, H2Profile)
     repository.createSchema()
     repository.dropSchema()
-    repository.close() // closeRepository()  
+    repository.close()

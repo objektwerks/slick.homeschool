@@ -20,7 +20,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile], val profile: JdbcProfi
 
   def exec[T](action: DBIO[T]): Future[T] = db.run(action)
 
-  def closeRepository() = db.close()
+  def close() = db.close()
 
   def createSchema() = await(DBIO.seq(schema.create))
 

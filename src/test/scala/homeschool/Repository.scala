@@ -27,11 +27,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
 
   def dropSchema() = await(DBIO.seq(schema.drop))
 
-  case class Teacher(id: Int = 0,
-                     name: String,
-                     email: String,
-                     timestamp: String = LocalDateTime.now.toString)
-
   class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")

@@ -1,8 +1,8 @@
 package homeschool
 
-import java.time.LocalDateTime
-
 import com.typesafe.config.ConfigFactory
+
+import java.time.LocalDateTime
 
 import org.scalatest.funsuite.AnyFunSuite
 import org.scalatest.matchers.should.Matchers

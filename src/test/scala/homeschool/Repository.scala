@@ -31,20 +31,18 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                      name: String,
                      email: String,
                      timestamp: String = LocalDateTime.now.toString)
-  class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers") {
+  class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
     def timestamp = column[String]("timestamp")
     def * = (id.?, name, email, timestamp).mapTo[Teacher]
-  }
-  object teachers extends TableQuery(new Teachers(_)) {
+  object teachers extends TableQuery(new Teachers(_)):
     val compiledFind = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
     def save(teacher: Teacher) = (this returning this.map(_.id)).insertOrUpdate(teacher)
     def find(name: String) = compiledFind(name).result.headOption
     def list() = compiledList.result
-  }
 
   case class Student(id: Int = 0,
                      name: String,

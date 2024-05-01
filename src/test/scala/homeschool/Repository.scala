@@ -43,14 +43,14 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list() = compiledList.result
   }
 
-  case class Student(id: Int = 0, name: String, email: String, born: LocalDateTime, timestamp: LocalDateTime = LocalDateTime.now)
+  case class Student(id: Int = 0, name: String, email: String, born: String, timestamp: String = LocalDateTime.now.toString)
   class Students(tag: Tag) extends Table[Student](tag, "students") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
     def born = column[LocalDateTime]("born")
     def timestamp = column[LocalDateTime]("timestamp")
-    def * = (id, name, email, born, timestamp) <> (Student.tupled, Student.unapply)
+    def * = (id.?, name, email, born, timestamp).mapTo[Student]
   }
   object students extends TableQuery(new Students(_)) {
     val compiledFind = Compiled { name: Rep[String] => filter(_.name === name) }

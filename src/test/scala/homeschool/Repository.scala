@@ -37,6 +37,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def email = column[String]("email", O.Unique)
     def timestamp = column[String]("timestamp")
     def * = (id.?, name, email, timestamp).mapTo[Teacher]
+
   object teachers extends TableQuery(new Teachers(_)):
     val compiledFind = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
@@ -49,21 +50,20 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                      email: String,
                      born: String,
                      timestamp: String = LocalDateTime.now.toString)
-  class Students(tag: Tag) extends Table[Student](tag, "students") {
+  class Students(tag: Tag) extends Table[Student](tag, "students"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
     def born = column[String]("born")
     def timestamp = column[String]("timestamp")
     def * = (id.?, name, email, born, timestamp).mapTo[Student]
-  }
-  object students extends TableQuery(new Students(_)) {
+
+  object students extends TableQuery(new Students(_)):
     val compiledFind = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
     def save(student: Student) = (this returning this.map(_.id)).insertOrUpdate(student)
     def find(name: String) = compiledFind(name).result.headOption
     def list() = compiledList.result
-  }
 
   case class Grade(id: Int = 0,
                    studentId: Int,

@@ -11,7 +11,7 @@ import scala.concurrent.{Await, Future}
 
 class Repository(val config: DatabaseConfig[JdbcProfile],
                  val profile: JdbcProfile,
-                 val awaitDuration: Duration = 1.second) {
+                 val awaitDuration: Duration = 1.second):
   import profile.api._
 
   val schema = teachers.schema ++ students.schema ++ grades.schema ++ schools.schema ++ categories.schema ++ courses.schema ++ assignments.schema
@@ -177,4 +177,3 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list(studentId: Int, gradeId: Int, courseId: Int) = compiledListByStudentGradeCourse( (studentId, gradeId, courseId) ).result
     def calculateScore(studentId: Int, gradeId: Int, courseId: Int) = compiledCalculateScore( (studentId, gradeId, courseId) ).result
   }
-}

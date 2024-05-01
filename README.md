@@ -2,10 +2,6 @@ Slick Homeschool
 ----------------
 >Homeschool domain model using Slick, H2 and Scala 3.
 
-TODO
-----
-* Upgrade to Slick 3.5. Requires significant work!
-
 Object Model
 ------------
 * Teacher (id, name, email, timestamp)
@@ -35,6 +31,10 @@ Queries
 -------
 1. List[T]
 2. Calculate Score By Student, Grade and Course across Assignments
+
+Build
+-----
+1. sbt clean compile
 
 Test
 ----

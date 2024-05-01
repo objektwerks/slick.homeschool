@@ -39,7 +39,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def * = (id.?, name, email, timestamp).mapTo[Teacher]
   }
   object teachers extends TableQuery(new Teachers(_)) {
-    val compiledFind = Compiled { name: Rep[String] => filter(_.name === name) }
+    val compiledFind = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
     def save(teacher: Teacher) = (this returning this.map(_.id)).insertOrUpdate(teacher)
     def find(name: String) = compiledFind(name).result.headOption
@@ -60,7 +60,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def * = (id.?, name, email, born, timestamp).mapTo[Student]
   }
   object students extends TableQuery(new Students(_)) {
-    val compiledFind = Compiled { name: Rep[String] => filter(_.name === name) }
+    val compiledFind = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
     def save(student: Student) = (this returning this.map(_.id)).insertOrUpdate(student)
     def find(name: String) = compiledFind(name).result.headOption
@@ -84,7 +84,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def studentFk = foreignKey("student_fk", studentId, TableQuery[Students])(_.id)
   }
   object grades extends TableQuery(new Grades(_)) {
-    val compiledListByStudent = Compiled { studentId: Rep[Int] => filter(_.studentId === studentId).sortBy(_.grade.asc) }
+    val compiledListByStudent = Compiled { ( studentId: Rep[Int] ) => filter(_.studentId === studentId).sortBy(_.grade.asc) }
     def save(grade: Grade) = (this returning this.map(_.id)).insertOrUpdate(grade)
     def list(studentId: Int) = compiledListByStudent(studentId).result
   }

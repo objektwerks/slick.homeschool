@@ -36,3 +36,13 @@ final case class Course(id: Int = 0,
                         name: String,
                         website: Option[String] = None,
                         timestamp: String = LocalDateTime.now.toString)
+
+final case class Assignment(id: Int = 0,
+                            studentId: Int,
+                            gradeId: Int,
+                            courseId: Int,
+                            description: String,
+                            assigned: String = LocalDateTime.now.toString,
+                            completed: String = LocalDateTime.now.plusHours(4).toString,
+                            score: Double = 0.0,
+                            timestamp: String = LocalDateTime.now.toString)

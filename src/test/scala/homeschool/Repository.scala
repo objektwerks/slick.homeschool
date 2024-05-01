@@ -110,16 +110,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     val compiledListBySchool = Compiled { ( schoolId: Rep[Int] ) => filter(_.schoolId === schoolId).sortBy(_.name.asc) }
     def save(course: Course) = (this returning this.map(_.id)).insertOrUpdate(course)
     def list(schoolId: Int) = compiledListBySchool(schoolId).result
-
-  case class Assignment(id: Int = 0,
-                        studentId: Int,
-                        gradeId: Int,
-                        courseId: Int,
-                        description: String,
-                        assigned: String = LocalDateTime.now.toString,
-                        completed: String = LocalDateTime.now.plusHours(4).toString,
-                        score: Double = 0.0,
-                        timestamp: String = LocalDateTime.now.toString)
                         
   class Assignments(tag: Tag) extends Table[Assignment](tag, "assignments"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)

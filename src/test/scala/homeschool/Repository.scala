@@ -71,7 +71,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                    started: String = LocalDateTime.now.toString,
                    completed: String = LocalDateTime.now.plusMonths(6).toString,
                    timestamp: String = LocalDateTime.now.toString)
-  class Grades(tag: Tag) extends Table[Grade](tag, "grades") {
+  class Grades(tag: Tag) extends Table[Grade](tag, "grades"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")
     def grade = column[Int]("grade")
@@ -80,12 +80,11 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def timestamp = column[String]("timestamp")
     def * = (id.?, studentId, grade, started, completed, timestamp).mapTo[Grade]
     def studentFk = foreignKey("student_fk", studentId, TableQuery[Students])(_.id)
-  }
-  object grades extends TableQuery(new Grades(_)) {
+
+  object grades extends TableQuery(new Grades(_)):
     val compiledListByStudent = Compiled { ( studentId: Rep[Int] ) => filter(_.studentId === studentId).sortBy(_.grade.asc) }
     def save(grade: Grade) = (this returning this.map(_.id)).insertOrUpdate(grade)
     def list(studentId: Int) = compiledListByStudent(studentId).result
-  }
 
   case class School(id: Int = 0,
                     name: String,

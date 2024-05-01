@@ -60,7 +60,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list() = compiledList.result
   }
 
-  case class Grade(id: Int = 0, studentId: Int, grade: Int, started: LocalDateTime = LocalDateTime.now, completed: LocalDateTime = LocalDateTime.now.plusMonths(6), timestamp: LocalDateTime = LocalDateTime.now)
+  case class Grade(id: Int = 0, studentId: Int, grade: Int, started: String = LocalDateTime.now.toString, completed: String = LocalDateTime.now.plusMonths(6).toString, timestamp: String = LocalDateTime.now.toString)
   class Grades(tag: Tag) extends Table[Grade](tag, "grades") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")
@@ -68,7 +68,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def started = column[LocalDateTime]("started")
     def completed = column[LocalDateTime]("completed")
     def timestamp = column[LocalDateTime]("timestamp")
-    def * = (id, studentId, grade, started, completed, timestamp) <> (Grade.tupled, Grade.unapply)
+    def * = (id.?, studentId, grade, started, completed, timestamp).mapTo[Grade]
     def studentFk = foreignKey("student_fk", studentId, TableQuery[Students])(_.id)
   }
   object grades extends TableQuery(new Grades(_)) {

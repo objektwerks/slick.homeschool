@@ -21,3 +21,8 @@ final case class Grade(id: Int = 0,
                        started: String = LocalDateTime.now.toString,
                        completed: String = LocalDateTime.now.plusMonths(6).toString,
                        timestamp: String = LocalDateTime.now.toString)
+
+final case class School(id: Int = 0,
+                        name: String,
+                        website: Option[String] = None,
+                        timestamp: String = LocalDateTime.now.toString)

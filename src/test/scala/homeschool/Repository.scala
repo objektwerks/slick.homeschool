@@ -71,11 +71,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def save(grade: Grade) = (this returning this.map(_.id)).insertOrUpdate(grade)
     def list(studentId: Int) = compiledListByStudent(studentId).result
 
-  case class School(id: Int = 0,
-                    name: String,
-                    website: Option[String] = None,
-                    timestamp: String = LocalDateTime.now.toString)
-
   class Schools(tag: Tag) extends Table[School](tag, "schools"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name", O.Unique)

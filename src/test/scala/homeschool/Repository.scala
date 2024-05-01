@@ -9,10 +9,12 @@ import slick.jdbc.JdbcProfile
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
 
-class Repository(val config: DatabaseConfig[JdbcProfile], val profile: JdbcProfile, val awaitDuration: Duration = 1 second) {
+class Repository(val config: DatabaseConfig[JdbcProfile],
+                 val profile: JdbcProfile,
+                 val awaitDuration: Duration = 1.second) {
   import profile.api._
 
-  implicit val dateTimeMapper = MappedColumnType.base[LocalDateTime, Timestamp](ldt => Timestamp.valueOf(ldt), ts => ts.toLocalDateTime)
+  given dateTimeMapper = MappedColumnType.base[LocalDateTime, Timestamp](ldt => Timestamp.valueOf(ldt), ts => ts.toLocalDateTime)
   val schema = teachers.schema ++ students.schema ++ grades.schema ++ schools.schema ++ categories.schema ++ courses.schema ++ assignments.schema
   val db = config.db
 

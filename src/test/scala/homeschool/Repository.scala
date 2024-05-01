@@ -95,13 +95,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def update(name: String, modified: Category) = compiledFindByName(name).update(modified)
     def list() = compiledList.result
 
-  case class Course(id: Int = 0,
-                    schoolId: Int,
-                    category: String,
-                    name: String,
-                    website: Option[String] = None,
-                    timestamp: String = LocalDateTime.now.toString)
-
   class Courses(tag: Tag) extends Table[Course](tag, "courses"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def schoolId = column[Int]("school_id")

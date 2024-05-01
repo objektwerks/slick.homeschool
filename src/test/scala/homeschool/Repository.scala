@@ -5,13 +5,14 @@ import java.time.LocalDateTime
 
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+import scala.language.postfixOps
 
 import slick.basic.DatabaseConfig
 import slick.jdbc.JdbcProfile
 
 class Repository(val config: DatabaseConfig[JdbcProfile],
                  val profile: JdbcProfile,
-                 val awaitDuration: Duration = 1.second):
+                 val awaitDuration: Duration = 1 second):
   import profile.api._
 
   val schema = teachers.schema ++ students.schema ++ grades.schema ++ schools.schema ++ categories.schema ++ courses.schema ++ assignments.schema

@@ -3,11 +3,11 @@ package homeschool
 import java.sql.Timestamp
 import java.time.LocalDateTime
 
-import slick.basic.DatabaseConfig
-import slick.jdbc.JdbcProfile
-
 import scala.concurrent.duration._
 import scala.concurrent.{Await, Future}
+
+import slick.basic.DatabaseConfig
+import slick.jdbc.JdbcProfile
 
 class Repository(val config: DatabaseConfig[JdbcProfile],
                  val profile: JdbcProfile,

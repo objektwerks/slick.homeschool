@@ -27,12 +27,15 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
 
   def dropSchema() = await(DBIO.seq(schema.drop))
 
-  case class Teacher(id: Int = 0, name: String, email: String, timestamp: String = LocalDateTime.now.toString)
+  case class Teacher(id: Int = 0,
+                     name: String,
+                     email: String,
+                     timestamp: String = LocalDateTime.now.toString)
   class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
-    def timestamp = column[LocalDateTime]("timestamp")
+    def timestamp = column[String]("timestamp")
     def * = (id.?, name, email, timestamp).mapTo[Teacher]
   }
   object teachers extends TableQuery(new Teachers(_)) {
@@ -43,13 +46,17 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list() = compiledList.result
   }
 
-  case class Student(id: Int = 0, name: String, email: String, born: String, timestamp: String = LocalDateTime.now.toString)
+  case class Student(id: Int = 0,
+                     name: String,
+                     email: String,
+                     born: String,
+                     timestamp: String = LocalDateTime.now.toString)
   class Students(tag: Tag) extends Table[Student](tag, "students") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
-    def born = column[LocalDateTime]("born")
-    def timestamp = column[LocalDateTime]("timestamp")
+    def born = column[String]("born")
+    def timestamp = column[String]("timestamp")
     def * = (id.?, name, email, born, timestamp).mapTo[Student]
   }
   object students extends TableQuery(new Students(_)) {
@@ -60,14 +67,19 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list() = compiledList.result
   }
 
-  case class Grade(id: Int = 0, studentId: Int, grade: Int, started: String = LocalDateTime.now.toString, completed: String = LocalDateTime.now.plusMonths(6).toString, timestamp: String = LocalDateTime.now.toString)
+  case class Grade(id: Int = 0,
+                   studentId: Int,
+                   grade: Int,
+                   started: String = LocalDateTime.now.toString,
+                   completed: String = LocalDateTime.now.plusMonths(6).toString,
+                   timestamp: String = LocalDateTime.now.toString)
   class Grades(tag: Tag) extends Table[Grade](tag, "grades") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")
     def grade = column[Int]("grade")
-    def started = column[LocalDateTime]("started")
-    def completed = column[LocalDateTime]("completed")
-    def timestamp = column[LocalDateTime]("timestamp")
+    def started = column[String]("started")
+    def completed = column[String]("completed")
+    def timestamp = column[String]("timestamp")
     def * = (id.?, studentId, grade, started, completed, timestamp).mapTo[Grade]
     def studentFk = foreignKey("student_fk", studentId, TableQuery[Students])(_.id)
   }
@@ -77,13 +89,16 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def list(studentId: Int) = compiledListByStudent(studentId).result
   }
 
-  case class School(id: Int = 0, name: String, website: Option[String] = None, timestamp: LocalDateTime = LocalDateTime.now)
+  case class School(id: Int = 0,
+                    name: String,
+                    website: Option[String] = None,
+                    timestamp: String = LocalDateTime.now.toString)
   class Schools(tag: Tag) extends Table[School](tag, "schools") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name", O.Unique)
     def website = column[Option[String]]("website")
-    def timestamp = column[LocalDateTime]("timestamp")
-    def * = (id, name, website, timestamp) <> (School.tupled, School.unapply)
+    def timestamp = column[String]("timestamp")
+    def * = (id.?, name, website, timestamp).mapTo[School]
   }
   object schools extends TableQuery(new Schools(_)) {
     val compiledList = Compiled { sortBy(_.name.asc) }

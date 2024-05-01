@@ -122,7 +122,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                     name: String,
                     website: Option[String] = None,
                     timestamp: String = LocalDateTime.now.toString)
-  class Courses(tag: Tag) extends Table[Course](tag, "courses") {
+  class Courses(tag: Tag) extends Table[Course](tag, "courses"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def schoolId = column[Int]("school_id")
     def category = column[String]("category")
@@ -132,12 +132,11 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def * = (id.?, schoolId, category, name, website, timestamp).mapTo[Course]
     def schoolFk = foreignKey("school_fk", schoolId, TableQuery[Schools])(_.id)
     def categoryFk = foreignKey("category_fk", category, TableQuery[Categories])(_.name)
-  }
-  object courses extends TableQuery(new Courses(_)) {
+
+  object courses extends TableQuery(new Courses(_)):
     val compiledListBySchool = Compiled { ( schoolId: Rep[Int] ) => filter(_.schoolId === schoolId).sortBy(_.name.asc) }
     def save(course: Course) = (this returning this.map(_.id)).insertOrUpdate(course)
     def list(schoolId: Int) = compiledListBySchool(schoolId).result
-  }
 
   case class Assignment(id: Int = 0,
                         studentId: Int,

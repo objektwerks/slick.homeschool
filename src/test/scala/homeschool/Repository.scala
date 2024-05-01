@@ -104,18 +104,17 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
 
   case class Category(name: String,
                       timestamp: LocalDateTime = LocalDateTime.now)
-  class Categories(tag: Tag) extends Table[Category](tag, "categories") {
+  class Categories(tag: Tag) extends Table[Category](tag, "categories"):
     def name = column[String]("name", O.PrimaryKey)
     def timestamp = column[String]("timestamp")
     def * = (name, timestamp).mapTo[Category]
-  }
-  object categories extends TableQuery(new Categories(_)) {
+
+  object categories extends TableQuery(new Categories(_)):
     val compiledFindByName = Compiled { ( name: Rep[String] ) => filter(_.name === name) }
     val compiledList = Compiled { sortBy(_.name.asc) }
     def add(category: Category) = this += category
     def update(name: String, modified: Category) = compiledFindByName(name).update(modified)
     def list() = compiledList.result
-  }
 
   case class Course(id: Int = 0,
                     schoolId: Int,

@@ -31,6 +31,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                      name: String,
                      email: String,
                      timestamp: String = LocalDateTime.now.toString)
+
   class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
@@ -50,6 +51,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                      email: String,
                      born: String,
                      timestamp: String = LocalDateTime.now.toString)
+
   class Students(tag: Tag) extends Table[Student](tag, "students"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")
@@ -71,6 +73,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                    started: String = LocalDateTime.now.toString,
                    completed: String = LocalDateTime.now.plusMonths(6).toString,
                    timestamp: String = LocalDateTime.now.toString)
+
   class Grades(tag: Tag) extends Table[Grade](tag, "grades"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")
@@ -90,6 +93,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                     name: String,
                     website: Option[String] = None,
                     timestamp: String = LocalDateTime.now.toString)
+
   class Schools(tag: Tag) extends Table[School](tag, "schools"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name", O.Unique)
@@ -104,6 +108,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
 
   case class Category(name: String,
                       timestamp: LocalDateTime = LocalDateTime.now)
+
   class Categories(tag: Tag) extends Table[Category](tag, "categories"):
     def name = column[String]("name", O.PrimaryKey)
     def timestamp = column[String]("timestamp")
@@ -122,6 +127,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                     name: String,
                     website: Option[String] = None,
                     timestamp: String = LocalDateTime.now.toString)
+
   class Courses(tag: Tag) extends Table[Course](tag, "courses"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def schoolId = column[Int]("school_id")
@@ -147,6 +153,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                         completed: String = LocalDateTime.now.plusHours(4).toString,
                         score: Double = 0.0,
                         timestamp: String = LocalDateTime.now.toString)
+                        
   class Assignments(tag: Tag) extends Table[Assignment](tag, "assignments"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")

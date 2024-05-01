@@ -147,7 +147,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                         completed: String = LocalDateTime.now.plusHours(4).toString,
                         score: Double = 0.0,
                         timestamp: String = LocalDateTime.now.toString)
-  class Assignments(tag: Tag) extends Table[Assignment](tag, "assignments") {
+  class Assignments(tag: Tag) extends Table[Assignment](tag, "assignments"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def studentId = column[Int]("student_id")
     def gradeId = column[Int]("grade_id")
@@ -161,8 +161,8 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def studentFk = foreignKey("student_assignment_fk", studentId, TableQuery[Students])(_.id)
     def gradeFk = foreignKey("grade_assignment_fk", gradeId, TableQuery[Grades])(_.id)
     def courseFK = foreignKey("course_assignment_fk", courseId, TableQuery[Courses])(_.id)
-  }
-  object assignments extends TableQuery(new Assignments(_)) {
+
+  object assignments extends TableQuery(new Assignments(_)):
     val compiledListByStudentGradeCourse = Compiled { ( studentId: Rep[Int], gradeId: Rep[Int], courseId: Rep[Int] ) =>
       filter(a => a.studentId === studentId && a.gradeId === gradeId && a.courseId === courseId).sortBy(_.assigned.asc) }
     val compiledCalculateScore = Compiled { ( studentId: Rep[Int], gradeId: Rep[Int], courseId: Rep[Int] ) =>
@@ -170,4 +170,3 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def save(assignment: Assignment) = (this returning this.map(_.id)).insertOrUpdate(assignment)
     def list(studentId: Int, gradeId: Int, courseId: Int) = compiledListByStudentGradeCourse( (studentId, gradeId, courseId) ).result
     def calculateScore(studentId: Int, gradeId: Int, courseId: Int) = compiledCalculateScore( (studentId, gradeId, courseId) ).result
-  }

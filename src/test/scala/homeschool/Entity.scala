@@ -26,3 +26,6 @@ final case class School(id: Int = 0,
                         name: String,
                         website: Option[String] = None,
                         timestamp: String = LocalDateTime.now.toString)
+
+final case class Category(name: String,
+                          timestamp: String = LocalDateTime.now.toString)

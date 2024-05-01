@@ -83,9 +83,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def save(school: School) = (this returning this.map(_.id)).insertOrUpdate(school)
     def list() = compiledList.result
 
-  case class Category(name: String,
-                      timestamp: LocalDateTime = LocalDateTime.now)
-
   class Categories(tag: Tag) extends Table[Category](tag, "categories"):
     def name = column[String]("name", O.PrimaryKey)
     def timestamp = column[String]("timestamp")

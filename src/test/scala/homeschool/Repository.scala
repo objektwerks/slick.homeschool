@@ -14,7 +14,6 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                  val awaitDuration: Duration = 1.second) {
   import profile.api._
 
-  given dateTimeMapper = MappedColumnType.base[LocalDateTime, Timestamp](ldt => Timestamp.valueOf(ldt), ts => ts.toLocalDateTime)
   val schema = teachers.schema ++ students.schema ++ grades.schema ++ schools.schema ++ categories.schema ++ courses.schema ++ assignments.schema
   val db = config.db
 
@@ -28,7 +27,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
 
   def dropSchema() = await(DBIO.seq(schema.drop))
 
-  case class Teacher(id: Int = 0, name: String, email: String, timestamp: LocalDateTime = LocalDateTime.now)
+  case class Teacher(id: Int = 0, name: String, email: String, timestamp: String = LocalDateTime.now.toString)
   class Teachers(tag: Tag) extends Table[Teacher](tag, "teachers") {
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name")

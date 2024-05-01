@@ -90,18 +90,17 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
                     name: String,
                     website: Option[String] = None,
                     timestamp: String = LocalDateTime.now.toString)
-  class Schools(tag: Tag) extends Table[School](tag, "schools") {
+  class Schools(tag: Tag) extends Table[School](tag, "schools"):
     def id = column[Int]("id", O.PrimaryKey, O.AutoInc)
     def name = column[String]("name", O.Unique)
     def website = column[Option[String]]("website")
     def timestamp = column[String]("timestamp")
     def * = (id.?, name, website, timestamp).mapTo[School]
-  }
-  object schools extends TableQuery(new Schools(_)) {
+
+  object schools extends TableQuery(new Schools(_)):
     val compiledList = Compiled { sortBy(_.name.asc) }
     def save(school: School) = (this returning this.map(_.id)).insertOrUpdate(school)
     def list() = compiledList.result
-  }
 
   case class Category(name: String,
                       timestamp: LocalDateTime = LocalDateTime.now)

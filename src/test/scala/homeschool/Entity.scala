@@ -14,3 +14,10 @@ final case class Student(id: Int = 0,
                          email: String,
                          born: String,
                          timestamp: String = LocalDateTime.now.toString)
+
+final case class Grade(id: Int = 0,
+                       studentId: Int,
+                       grade: Int,
+                       started: String = LocalDateTime.now.toString,
+                       completed: String = LocalDateTime.now.plusMonths(6).toString,
+                       timestamp: String = LocalDateTime.now.toString)

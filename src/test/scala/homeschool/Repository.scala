@@ -33,7 +33,7 @@ class Repository(val config: DatabaseConfig[JdbcProfile],
     def name = column[String]("name")
     def email = column[String]("email", O.Unique)
     def timestamp = column[LocalDateTime]("timestamp")
-    def * = (id, name, email, timestamp) <> (Teacher.tupled, Teacher.unapply)
+    def * = (id.?, name, email, timestamp).mapTo[Teacher]
   }
   object teachers extends TableQuery(new Teachers(_)) {
     val compiledFind = Compiled { name: Rep[String] => filter(_.name === name) }

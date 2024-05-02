@@ -5,8 +5,9 @@ import java.time.LocalDateTime
 sealed trait Entity
 
 object Entity:
-  given Ordering[Teacher] = Ordering.by(t => t.name)
-  given Ordering[Student] = Ordering.by(s => s.name)
+  given Ordering[Teacher] = Ordering.by[Teacher, String](t => t.name)
+  given Ordering[Student] = Ordering.by[Student, String](s => s.name)
+  given Ordering[Grade] = Ordering.by[Grade, Int](g => g.grade).reverse
 
 final case class Teacher(id: Int = 0,
                          name: String,

@@ -6,6 +6,7 @@ sealed trait Entity
 
 object Entity:
   given Ordering[Teacher] = Ordering.by(t => t.name)
+  given Ordering[Student] = Ordering.by(s => s.name)
 
 final case class Teacher(id: Int = 0,
                          name: String,

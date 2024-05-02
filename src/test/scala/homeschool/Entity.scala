@@ -9,6 +9,7 @@ object Entity:
   given Ordering[Student] = Ordering.by[Student, String](s => s.name)
   given Ordering[Grade] = Ordering.by[Grade, Int](g => g.grade).reverse
   given Ordering[School] = Ordering.by[School, String](s => s.name)
+  given Ordering[Category] = Ordering.by[Category, String](c => c.name)
 
 final case class Teacher(id: Int = 0,
                          name: String,

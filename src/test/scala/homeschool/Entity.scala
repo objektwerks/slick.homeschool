@@ -4,6 +4,9 @@ import java.time.LocalDateTime
 
 sealed trait Entity
 
+object Entity:
+  given Ordering[Teacher] = Ordering.by(t => t.name)
+
 final case class Teacher(id: Int = 0,
                          name: String,
                          email: String,

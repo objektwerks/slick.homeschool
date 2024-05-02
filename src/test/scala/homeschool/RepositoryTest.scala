@@ -2,15 +2,12 @@ package homeschool
 
 import com.typesafe.config.ConfigFactory
 
-import java.time.LocalDateTime
-
 import org.scalatest.funsuite.AnyFunSuite
-import org.scalatest.matchers.should.Matchers
 
 import slick.basic.DatabaseConfig
 import slick.jdbc.{H2Profile, JdbcProfile}
 
-final class RepositoryTest extends AnyFunSuite with Matchers:
+final class RepositoryTest extends AnyFunSuite:
   test("repository"):
     val config = DatabaseConfig.forConfig[JdbcProfile]("test", ConfigFactory.load("test.conf"))
     val repository = new Repository(config, H2Profile)

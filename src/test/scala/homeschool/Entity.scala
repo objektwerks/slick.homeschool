@@ -11,6 +11,7 @@ object Entity:
   given Ordering[School] = Ordering.by[School, String](s => s.name)
   given Ordering[Category] = Ordering.by[Category, String](c => c.name)
   given Ordering[Course] = Ordering.by[Course, String](c => c.name)
+  given Ordering[Assignment] = Ordering.by[Assignment, String](a => a.assigned)
 
 final case class Teacher(id: Int = 0,
                          name: String,

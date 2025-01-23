@@ -1,7 +1,7 @@
 name := "slick.homeschool"
 organization := "objektwerks"
 version := "0.4-SNAPSHOT"
-scalaVersion := "3.6.3"
+scalaVersion := "3.6.4-RC1"
 libraryDependencies ++= {
   val slickVersion = "3.5.2"
   Seq(
